@@ -41,10 +41,6 @@ contract GawooniSale is OwnableImpl, MintingSale, CappedBonusSale, PeriodSale {
 		BtcEthRateChange(_btcEthRate);
 	}
 
-	function withdrawEth(address _to, uint256 _value) onlyOwner public {
-		withdraw(address(0), _to, _value);
-	}
-
 	function withdrawBtc(bytes _to, uint256 _value) onlyOwner public {
 		burnWithData(btcToken, _value, _to);
 	}
