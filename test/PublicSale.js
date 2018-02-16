@@ -33,5 +33,8 @@ contract("PublicSale", accounts => {
     await testBonus(7, 100, bn(20));
     await testBonus(14, 100, bn(10));
     await testBonus(21, 100, bn(0));
+
+    await testBonus(21, bn("50000000000000000000000"), bn("0"));
+    await testBonus(21, bn("100000000000000000000000"), bn("75000000000000000000000"));
   });
 });

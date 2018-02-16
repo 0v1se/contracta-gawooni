@@ -22,7 +22,12 @@ contract PreSale is GawooniSale {
 	}
 
 	function getAmountBonus(uint256 sold) internal returns (uint256) {
-		//todo after clarification
-		return 0;
+		if (sold >= 100000 * 10**18) {
+			return sold;
+		} else if (sold >= 50000 * 10 ** 18) {
+			return sold.mul(75).div(100);
+		} else {
+			return 0;
+		}
 	}
 }

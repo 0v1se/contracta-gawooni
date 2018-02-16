@@ -27,5 +27,7 @@ contract("PreSale", accounts => {
     }
 
 	await testBonus(0, 100, bn(50));
+    await testBonus(0, bn("50000000000000000000000"), bn("62500000000000000000000"));
+    await testBonus(0, bn("100000000000000000000000"), bn("150000000000000000000000"));
   });
 });
