@@ -4,11 +4,12 @@ import "@daonomic/sale/contracts/MintingSale.sol";
 import "@daonomic/util/contracts/OwnableImpl.sol";
 import "@daonomic/sale/contracts/CappedBonusSale.sol";
 import "@daonomic/sale/contracts/PeriodSale.sol";
+import "@daonomic/util/contracts/Pausable.sol";
 
 contract GawooniSale is OwnableImpl, MintingSale, CappedBonusSale, PeriodSale {
 	address public btcToken;
+	uint256 public ethRate = 1000 * 10**18;
 	uint256 public btcEthRate = 10 * 10**10;
-	uint256 public constant ethRate = 1000 * 10**18;
 
 	function GawooniSale(
 		address _mintableToken,
@@ -34,7 +35,14 @@ contract GawooniSale is OwnableImpl, MintingSale, CappedBonusSale, PeriodSale {
 		}
 	}
 
-	event BtcEthRateChange(uint256 btcEthRate);
+	event EthRateChange(uint256 rate);
+
+	function setEthRate(uint256 _ethRate) onlyOwner public {
+		ethRate = _ethRate;
+		EthRateChange(_ethRate);
+	}
+
+	event BtcEthRateChange(uint256 rate);
 
 	function setBtcEthRate(uint256 _btcEthRate) onlyOwner public {
 		btcEthRate = _btcEthRate;
@@ -47,5 +55,13 @@ contract GawooniSale is OwnableImpl, MintingSale, CappedBonusSale, PeriodSale {
 
 	function transferTokenOwnership(address newOwner) onlyOwner public {
 		OwnableImpl(token).transferOwnership(newOwner);
+	}
+
+	function pauseToken() onlyOwner public {
+		Pausable(token).pause();
+	}
+
+	function unpauseToken() onlyOwner public {
+		Pausable(token).unpause();
 	}
 }
