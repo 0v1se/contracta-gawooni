@@ -64,4 +64,10 @@ contract GawooniSale is OwnableImpl, MintingSale, CappedBonusSale, PeriodSale {
 	function unpauseToken() onlyOwner public {
 		Pausable(token).unpause();
 	}
+
+	function transfer(address beneficiary, uint256 amount) onlyOwner public {
+		doPurchase(beneficiary, amount, 0);
+		Purchase(beneficiary, address(1), 0, amount, 0);
+		onPurchase(beneficiary, address(1), 0, amount, 0);
+	}
 }
